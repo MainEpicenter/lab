@@ -203,9 +203,9 @@ def comfirm_hostname():
     host_list=['A0','A1','A2','A3','N1','N2','N3','N4'] #20개의 라즈베리파이에 Mac Address를 추가해라
     #그리고 arr[0][0]이 맨 처음 값이므로 노드 번호를 0번째부터 시작해야 맞는 것이다.
     #배열도 arr[0]가 먼저 시작이다.
-    num=len(mac_list)
+    num=len(host_list)
     for i in range(0,num):
-        if mac_list[i] == blue_mac:
+        if host_list[i] == blue_mac:
             return i
 
 
