@@ -205,7 +205,7 @@ def comfirm_hostname():
     #배열도 arr[0]가 먼저 시작이다.
     num=len(host_list)
     for i in range(0,num):
-        if host_list[i] == blue_mac:
+        if host_list[i] == myhost:
             return i
 
 
