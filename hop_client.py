@@ -74,7 +74,7 @@ def write_inquiry_mode(sock, mode):
     if status != 0: return -1
     return 0
 
-def device_inquiry_with_with_rssi(sock,text,settime,node_name):
+def device_inquiry_with_with_rssi(sock,settime,node_name):
     # save current filter
     old_filter = sock.getsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, 14)
 
@@ -211,11 +211,11 @@ def comfirm_hostname():
 
 if __name__ == "__main__":
     cmd=pexpect.spawn("sudo hciconfig hci0 piscan")
-    name=input()
-    name=name+".txt"
+    #name=input()
+    #name=name+".txt"
     node_name=comfirm_hostname()
-    text=open(name,"w+")
+    #text=open(name,"w+")
     settime=time.time()
 
     while 1:
-        device_inquiry_with_with_rssi(sock,text,settime,node_name)
+        device_inquiry_with_with_rssi(sock,settime,node_name)
