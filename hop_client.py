@@ -9,7 +9,10 @@ import bluetooth
 import socket
 import time
 import pexpect
-import numpy as np
+import subprocess
+import glob
+
+reset_point=0 #많은 에러 발생시 오류 처리, 10번이 넘으면 에러로 다시 시작, restart함수
 
 
 def printpacket(pkt):
@@ -112,7 +115,7 @@ def device_inquiry_with_with_rssi(sock,settime,node_name):
                 timestamp=now_time-settime
                 num=timestamp%1200
                 if num>600:
-                    turnon=pexpect.spawn("sudo hciconfig hci0 piscan")
+                    os.system("sudo hciconfig hci0 piscan")
 
                 if rssi>-70:
                     raspi=addr_confirm(addr)#어떤 라즈베리파이인지 알려준다.
@@ -123,6 +126,7 @@ def device_inquiry_with_with_rssi(sock,settime,node_name):
                     send_data=str(node_name)+'%'+str(raspi)
                     if raspi is not False:
                         #text.write(mat_data+'\r\n')
+                        time.sleep(0.2)
                         print(send_data)
                         #이렇게 해야 바로 전송하고 접속을 끊어서 다음 데이터가 잘 들어갈 수 있다.
                         sock_data=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -146,6 +150,8 @@ def device_inquiry_with_with_rssi(sock,settime,node_name):
                 print("[%s] (no RRSI)" % addr)
         else:
             print("unrecognized packet type 0x%02x" % ptype)
+            restart()
+
         #print("event ", event) (event를 출력하는 것을 일단 없애기로)
 
 
@@ -208,14 +214,24 @@ def comfirm_hostname():
         if host_list[i] == myhost:
             return i
 
+def restart(): #에러가 반복되는 경우에 종료하고 다시 실행시킨다.
+    global reset_point
+    reset_point+=1
+    if reset_point > 10:
+        file_list=glob.glob(".py")
+        subprocess.call(['python',file_list[0]])
+        sys.exit(1)
+
+
 
 if __name__ == "__main__":
-    cmd=pexpect.spawn("sudo hciconfig hci0 piscan")
+    os.system("sudo hciconfig hci0 piscan")
     #name=input()
     #name=name+".txt"
     node_name=comfirm_hostname()
     #text=open(name,"w+")
     settime=time.time()
+
 
     while 1:
         device_inquiry_with_with_rssi(sock,settime,node_name)
