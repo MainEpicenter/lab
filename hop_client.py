@@ -130,7 +130,9 @@ def device_inquiry_with_with_rssi(sock,settime,node_name):
                         print(send_data)
                         #이렇게 해야 바로 전송하고 접속을 끊어서 다음 데이터가 잘 들어갈 수 있다.
                         sock_data=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-                        sock_data.connect(('166.104.75.39',8585))
+                        if sock_data.connect_ex(('166.104.75.39',8585)) != 0:
+                            global reset_point=11#바로 종료하기 위한 코드 삽입
+                            restart()
                         sock_data.send(send_data.encode())
                         sock_data.close()
         elif event == bluez.EVT_INQUIRY_COMPLETE:
