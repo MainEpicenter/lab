@@ -1,6 +1,6 @@
 # performs a simple device inquiry, followed by a remote name request of each
 # discovered device
-
+# -*- coding: utf-8 -*-
 import os
 import sys
 import struct
@@ -131,7 +131,7 @@ def device_inquiry_with_with_rssi(sock,settime,node_name):
                         #이렇게 해야 바로 전송하고 접속을 끊어서 다음 데이터가 잘 들어갈 수 있다.
                         sock_data=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
                         if sock_data.connect_ex(('166.104.75.39',8585)) != 0:
-                            global reset_point 
+                            global reset_point
                             reset_point=11#바로 종료하기 위한 코드 삽입
                             restart()
                         sock_data.send(send_data.encode())
@@ -193,14 +193,14 @@ if mode != 1:
 
 
 def addr_confirm(addr):
-    addr_set=['B8:27:EB:48:DE:38', 'B8:27:EB:AA:2A:FD', 'B8:27:EB:A5:11:B8', 'B8:27:EB:E2:9A:DD', 'B8:27:EB:17:D9:C0', 'B8:27:EB:52:1B:57', 'B8:27:EB:32:AC:9D', 'B8:27:EB:61:96:25']
-    raspi_set=["0","1","2","3","4","5","6","7"]
+    addr_set=['B8:27:EB:48:DE:38', 'B8:27:EB:AA:2A:FD', 'B8:27:EB:A5:11:B8', 'B8:27:EB:96:5F:48', 'B8:27:EB:17:D9:C0', 'B8:27:EB:52:1B:57', 'B8:27:EB:32:AC:9D', 'B8:27:EB:61:96:25','B8:27:EB:B9:87:55','B8:27:EB:DB:FE:06','B8:27:EB:ED:D2:9A','B8:27:EB:99:54:56','B8:27:EB:B0:05:DD']
+    #raspi_set=["0","1","2","3","4","5","6","7","8","9","10","11","12","13"]
     set_num=len(addr_set)
     run=False
 
     for i in range(0,set_num):
         if(addr_set[i]==str(addr)):
-            result=raspi_set[i]
+            result=str(i)
             run=True
     if run is False:
         result=False
@@ -216,16 +216,14 @@ def comfirm_hostname():
     for i in range(0,num):
         if host_list[i] == myhost:
             return i
-
-def restart(): #에러가 반복되는 경우에 종료하고 다시 실행시킨다.
+#에러가 반복되는 경우에 종료하고 다시 실행시킨다.
+def restart():
     global reset_point
     reset_point+=1
-    if reset_point > 10:
-        file_list=glob.glob(".py")
+    if reset_point > 6:
+        file_list=glob.glob("*.py")
         subprocess.call(['python',file_list[0]])
         sys.exit(1)
-
-
 
 if __name__ == "__main__":
     os.system("sudo hciconfig hci0 piscan")
