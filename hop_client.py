@@ -209,15 +209,18 @@ def addr_confirm(addr):
 
 def comfirm_hostname():
     myhost = os.uname()[1]
-    host_list=['A0','A1','A2','A3','N1','N2','N3','N4'] #20개의 라즈베리파이에 Mac Address를 추가해라
+    host_order=int(myhost[1:])#노드의 숫자 1,2,3,4, 이런 숫자
+    #host_list=['A0','A1','A2','A3','N1','N2','N3','N4'] #20개의 라즈베리파이에 Mac Address를 추가해라
     #그리고 arr[0][0]이 맨 처음 값이므로 노드 번호를 0번째부터 시작해야 맞는 것이다.
     #배열도 arr[0]가 먼저 시작이다.
-    num=len(host_list)
-    for i in range(0,num):
-        if host_list[i] == myhost:
-            return i
-#에러가 반복되는 경우에 종료하고 다시 실행시킨다.
-def restart():
+
+    if myhost[0] == 'A':
+        return host_order
+    else:
+        return host_order+3
+
+
+def restart(): #에러가 반복되는 경우에 종료하고 다시 실행시킨다.
     global reset_point
     reset_point+=1
     if reset_point > 6:
@@ -236,3 +239,4 @@ if __name__ == "__main__":
 
     while 1:
         device_inquiry_with_with_rssi(sock,settime,node_name)
+        
