@@ -8,7 +8,7 @@ import bluetooth._bluetooth as bluez
 import bluetooth
 import socket
 import time
-import pexpect
+#import pexpect
 import subprocess
 import glob
 
