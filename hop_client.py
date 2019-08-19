@@ -241,6 +241,5 @@ if __name__ == "__main__":
         device_inquiry_with_with_rssi(sock,settime,node_name)
         check_time=time.time()
         if check_time-settime>300:
-            global reset_point
             reset_point=11
             restart()
