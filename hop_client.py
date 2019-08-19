@@ -1,6 +1,6 @@
+# -*- coding: utf-8 -*-
 # performs a simple device inquiry, followed by a remote name request of each
 # discovered device
-# -*- coding: utf-8 -*-
 import os
 import sys
 import struct
