@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#!/usr/bin/python3
 # performs a simple device inquiry, followed by a remote name request of each
 # discovered device
 import os
@@ -225,7 +226,7 @@ def restart(): #에러가 반복되는 경우에 종료하고 다시 실행시�
     reset_point+=1
     if reset_point > 6:
         file_list=glob.glob("*.py")
-        subprocess.call(['python',file_list[0]])
+        os.system("sudo python3 /home/pi/lab/hop_client.py")
         sys.exit(1)
 
 if __name__ == "__main__":
