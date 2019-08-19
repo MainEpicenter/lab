@@ -8,7 +8,7 @@ import bluetooth._bluetooth as bluez
 import bluetooth
 import socket
 import time
-#import pexpect
+#import pexpect -> 이 module은 현재 쓸 계획 X
 import subprocess
 import glob
 
@@ -239,4 +239,8 @@ if __name__ == "__main__":
 
     while 1:
         device_inquiry_with_with_rssi(sock,settime,node_name)
-        
+        check_time=time.time()
+        if check_time-settime>300:
+            global reset_point
+            reset_point=11
+            restart()
