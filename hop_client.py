@@ -227,7 +227,8 @@ def restart(): #에러가 반복되는 경우에 종료하고 다시 실행시�
     reset_point+=1
     if reset_point > 6:
         file_list=glob.glob("*.py")
-        subprocess.call(["python3",file_list[0]])
+        #subprocess.call(["python3",file_list[0]])
+        os.system("sudo /usr/bin/python3 /home/pi/lab/hop_client.py")
         sys.exit(1)
 
 if __name__ == "__main__":
