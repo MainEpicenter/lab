@@ -233,11 +233,14 @@ def comfirm_hostname():
 #         os._exit():
 
 def restart():
-    executable = sys.executable
-    args = sys.argv[:]
-    args.insert(0, sys.executable)
-    time.sleep(1)
-    os.execvp(executable, args)
+    global reset_point
+    reset_point+=1
+    if reset_point>6:
+        executable = sys.executable
+        args = sys.argv[:]
+        args.insert(0, sys.executable)
+        time.sleep(1)
+        os.execvp(executable, args)
 
 if __name__ == "__main__":
     os.system("sudo hciconfig hci0 piscan")
