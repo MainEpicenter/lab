@@ -13,6 +13,7 @@ import time
 import subprocess
 import glob
 
+time.sleep(2) #처음에 실행하기전에 그 전 코드가 종료될 때까지 기다려주는 작업을 위해서 작성
 reset_point=0 #많은 에러 발생시 오류 처리, 10번이 넘으면 에러로 다시 시작, restart함수
 
 
@@ -226,7 +227,7 @@ def restart(): #에러가 반복되는 경우에 종료하고 다시 실행시�
     reset_point+=1
     if reset_point > 6:
         file_list=glob.glob("*.py")
-        os.system("sudo python3 /home/pi/lab/hop_client.py")
+        subprocess.call(["python3",file_list[0]])
         sys.exit(1)
 
 if __name__ == "__main__":
@@ -240,7 +241,7 @@ if __name__ == "__main__":
 
     while 1:
         device_inquiry_with_with_rssi(sock,settime,node_name)
-        check_time=time.time()
-        if check_time-settime>100:
-            reset_point=11
-            restart()
+        #check_time=time.time()
+        #if check_time-settime>100:
+            #reset_point=11
+            #restart()
