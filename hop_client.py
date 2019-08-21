@@ -250,7 +250,7 @@ if __name__ == "__main__":
 
     while 1:
         device_inquiry_with_with_rssi(sock,settime,node_name)
-        #check_time=time.time()
+        check_time=time.time()
         if check_time-settime>100:
             reset_point=11
             restart()
