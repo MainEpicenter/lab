@@ -239,7 +239,7 @@ def restart():
         executable = sys.executable
         args = sys.argv[:]
         args.insert(0, sys.executable)
-        time.sleep(1)
+        time.sleep(2)
         os.execvp(executable, args)
 
 if __name__ == "__main__":
