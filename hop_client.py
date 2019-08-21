@@ -222,14 +222,22 @@ def comfirm_hostname():
         return host_order+3
 
 
-def restart(): #에러가 반복되는 경우에 종료하고 다시 실행시킨다.
-    global reset_point
-    reset_point+=1
-    if reset_point > 6:
-        file_list=glob.glob("*.py")
-        #subprocess.call(["python3",file_list[0]])
-        os.system("sudo /usr/bin/python3 /home/pi/lab/hop_client.py")
-        sys.exit(1)
+# def restart(): #에러가 반복되는 경우에 종료하고 다시 실행시킨다.
+#     global reset_point
+#     reset_point+=1
+#     if reset_point > 6:
+#         file_list=glob.glob("*.py")
+#         #subprocess.call(["python3",file_list[0]])
+#         os.system("sudo /usr/bin/python3 /home/pi/lab/hop_client.py")
+#         #sys.exit(1)
+#         os._exit():
+
+def restart():
+    executable = sys.executable
+    args = sys.argv[:]
+    args.insert(0, sys.executable)
+    time.sleep(1)
+    os.execvp(executable, args)
 
 if __name__ == "__main__":
     os.system("sudo hciconfig hci0 piscan")
@@ -243,6 +251,6 @@ if __name__ == "__main__":
     while 1:
         device_inquiry_with_with_rssi(sock,settime,node_name)
         #check_time=time.time()
-        #if check_time-settime>100:
-            #reset_point=11
-            #restart()
+        if check_time-settime>100:
+            reset_point=11
+            restart()
