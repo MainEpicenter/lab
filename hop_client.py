@@ -132,7 +132,8 @@ def device_inquiry_with_with_rssi(sock,settime,node_name):
                         print(send_data)
                         #이렇게 해야 바로 전송하고 접속을 끊어서 다음 데이터가 잘 들어갈 수 있다.
                         sock_data=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-                        if sock_data.connect_ex(('166.104.75.39',8585)) != 0:
+                        #sock_data.connect_ex(('166.104.75.39',8585)) -> 실험실 실험에서는 이것으로 과기관 실험에서는 192.168.0.2로
+                        if sock_data.connect_ex(('192.168.0.2',8585)) != 0:
                             global reset_point
                             reset_point=11#바로 종료하기 위한 코드 삽입
                             restart()
